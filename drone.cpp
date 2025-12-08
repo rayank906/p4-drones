@@ -299,6 +299,13 @@ class Drones {
                     min_dist = primCoords[j].dist;
                 }
             }
+            
+            // check for mst mistake
+            if (min_dist == numeric_limits<double>::infinity()) {
+                cerr << "Cannot construct MST\n";
+                exit(1);
+            }
+
             primCoords[min_idx].visited = true;
             for (size_t k = 0; k < primCoords.size(); k++) {
                 if (!primCoords[k].visited) {
@@ -314,6 +321,10 @@ class Drones {
         // output mst
         double total = 0;
         for (size_t i = 1; i < primCoords.size(); i++) {
+            if (primCoords[i].dist == numeric_limits<double>::infinity()) {
+                cerr << "Cannot construct MST\n";
+                exit(1);
+            }
             total += sqrt(primCoords[i].dist);
         }
 
